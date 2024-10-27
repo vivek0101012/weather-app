@@ -25,6 +25,9 @@ setTimeout(()=>{
 const apikey= 'da5eae9ff9c8b0e8f68b5c24569f2c60';
 
 function apicall(){
+
+
+  
 const city=document.querySelector('input').value
 
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apikey}&units=metric`;
@@ -57,7 +60,7 @@ return response.json()
 
     )
 .catch(error=>{
-alert(error.message)
+
 });
 
 
