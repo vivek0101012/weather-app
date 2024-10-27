@@ -1,12 +1,12 @@
-  <!DOCTYPE html>
-  <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>weather app </title>
-    <link rel="icon" href="clear.png" type="png">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>weather app </title>
+  <link rel="icon" href="clear.png" type="png">
 
-    <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css">
 <script >
 
 function buttonpress(){
@@ -14,7 +14,7 @@ var button =document.getElementById("search")
 button.classList.add("scale-95 border border-black")
 
 setTimeout(()=>{
-    button.classList.remove("scale-95 border border-black")
+  button.classList.remove("scale-95 border border-black")
 },2000)
 
 
@@ -27,38 +27,38 @@ const apikey= 'da5eae9ff9c8b0e8f68b5c24569f2c60';
 function apicall(){
 
 
-  
+
 const city=document.querySelector('input').value
 
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apikey}&units=metric`;
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apikey}&units=metric`;
 
-    fetch(url).then(response=>{
-        if(!response.ok){throw new Error ('city not found')}
+  fetch(url).then(response=>{
+      if(!response.ok){throw new Error ('city not found')}
 return response.json()
 
-    }).then(data=>
+  }).then(data=>
 
-    {
-        
-        document.getElementById('condition').textContent = ` ${data.weather[0].description}`;
-        document.getElementById('temprature').textContent = ` ${data.main.temp}°C`
-      document.getElementById('city').textContent = ` ${data.name}`;
-
-
+  {
       
-      document.getElementById('image').src = `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
-    
+      document.getElementById('condition').textContent = ` ${data.weather[0].description}`;
+      document.getElementById('temprature').textContent = ` ${data.main.temp}°C`
+    document.getElementById('city').textContent = ` ${data.name}`;
 
 
-        // Display additional weather details like wind speed and humidity
-        document.getElementById('wind').textContent = `Wind : ${data.wind.speed} m/s`;
-      document.getElementById('humidity').textContent = `Humidity: ${data.main.humidity}%`;
     
-    
-    
-    }
+    document.getElementById('image').src = `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
+  
 
-    )
+
+      // Display additional weather details like wind speed and humidity
+      document.getElementById('wind').textContent = `Wind : ${data.wind.speed} m/s`;
+    document.getElementById('humidity').textContent = `Humidity: ${data.main.humidity}%`;
+  
+  
+  
+  }
+
+  )
 .catch(error=>{
 alert(error.message)
 });
@@ -68,20 +68,43 @@ alert(error.message)
 
 
 
+function debounce(apicall,delay){
+let timer;
+        return (...args)=>{
+
+             clearTimeout(timer);
+             timer=setTimeout(()=>{
+
+
+              apicall.apply(this,args)
+
+               
+
+
+             },delay)
+
+
+        }
+
+}
+
+
+let debouncecall=debounce(apicall,1000)
+
 
 
 </script>
 
 
-  </head>
-  <body class="  flex w-full min-h-screen bg-[#011330] flex-col
-  justify-center
-  items-center
+</head>
+<body class="  flex w-full min-h-screen bg-[#011330] flex-col
+justify-center
+items-center
 space-y-4
 md:flex-row
-  space-x-5
- px-8 py-8 
-  ">
+space-x-5
+px-8 py-8 
+">
 
 <div class= " mt-4 text-white font-mullish space-y-2 font-bold text-5xl md:text-5xl animate-pulse"> <span class="text-greenLight ">Weather</span> App
 
@@ -91,7 +114,7 @@ md:flex-row
 
 
 
-    <!-- main card  -->
+  <!-- main card  -->
 <div class="rounded-3xl py-4 border border-white   
 
 bg-gradient-to-b from-green-300 via-emerald-500 to-teal-500
@@ -99,7 +122,7 @@ flex flex-col px-4    ">
 <!-- search button  and icon-->
 <div id="searchbox" class="flex md:flex-row px-2 justify-center items-center space-x-2 ">
 <!-- search bar -->
- <input type="text" oninput="apicall()" class=" flex text-center items-center justify-center rounded-3xl overflow-hidden px-1 py-1" placeholder="search your city">
+<input type="text" oninput="debouncecall()" class=" flex text-center items-center justify-center rounded-3xl overflow-hidden px-1 py-1" placeholder="search your city">
 </input>
 <!-- search icon -->
 <div class="flex max-w-[32px]  hover:scale-75   cursor-pointer h-[32px] w-[32px]
@@ -112,11 +135,11 @@ alt="">
 </div>
 <!-- weather -->
 <div class="flex  text-white text-xl  font-mullish flex-col justify-center items-center space-y-4 m-4">
- 
+
 <!-- image -->
- <img src="" class="h-48" id="image" alt="">
- <div id="temprature"></div>
- <div id="city" class="text-white text-4xl"></div>
+<img src="" class="h-48" id="image" alt="">
+<div id="temprature"></div>
+<div id="city" class="text-white text-4xl"></div>
 <!-- city and temprature -->
 <div id="condition"></div> 
 
@@ -126,20 +149,16 @@ alt="">
 </div>
 
 <!-- humidity etc--> 
- <div class="flex-col md:flex-row text-white md:text-xl flex justify-center items-center text-lg  space-x-4 ">
+<div class="flex-col md:flex-row text-white md:text-xl flex justify-center items-center text-lg  space-x-4 ">
 
-    <div id="humidity"></div>
+  <div id="humidity"></div>
 
 
 <div id="wind" class="text-lg"></div>
 
 
- </div>
+</div>
 
 
 
 </div>
-
-
-  </body>
-  </html>
